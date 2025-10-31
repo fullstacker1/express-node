@@ -25,9 +25,21 @@ export class Server {
         //public folders
         this.app.use(express.static(this.publicPath))
 
-        this.app.get('*', (req, res) => {
-            const indexPath = path.join(__dirname + `../../../${this.publicPath}/index.html`)
+        //routes
+        this.app.get('/api/todos', (req,res) => {
 
+            res.json([
+                {id:1,text:'buy by milk', createAt: new Date()},
+                 {id:2,text:'buy by jilk', createAt: new Date()},
+                  {id:3,text:'buy by filk', createAt: new Date()}
+            ])
+
+        })
+        
+
+        this.app.get('*', (req, res) => {
+            const indexPath = path.join( __dirname + `../../../${this.publicPath}/index.html`)
+            res.sendFile(indexPath)
         })
         this.app.listen(this.port, () => {
             console.log(`server run on port ${this.port}`);
